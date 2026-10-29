@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>江西健康云 · 省平台运营端 V1.0</title>
+<title>江西健康云 · 省平台运营端 V1.1</title>
 <!--
-  江西健康云 · 省平台运营端  V1.0（2026-10-29）
+  江西健康云 · 省平台运营端  V1.1（2026-10-29）
+  变更：① 业务统计 · AI计算明细 改为全厂商工具（影禾/推想/联影智能/达摩院），合计仍 32；
+             适用检查与模型筛选同步；② 计费统计 机构扩为 8 家、厂商覆盖 6 家、AI工具覆盖 8 个，
+             厂商/AI工具筛选下拉补齐
+  版本：V1.0（2026-10-29）
   内容：把生态伙伴端「交易与财务」下的 计算统计 / 业务统计 / 计费统计 三页迁移至省平台运营端，
         置于「运营管理」组内「服务工单」下方（菜单 13 / 14 / 15）
   外壳：顶栏 64px · 侧栏 240px · 主色 #C0392B · 选中 #FDE8E8 · 表头 #F0F2F5（对齐目标运营端）
@@ -834,7 +838,7 @@ a,.dg-link{color:#1976D2 !important}
           <b>使用统计</b>
           <span style="display:flex;align-items:center;gap:7px">
             <small>模型筛选</small>
-            <select class="bs-sel" id="bsModel"><option>全部模型</option><option>CT胸部AIR（影禾）</option><option>CT颅脑AIR（影禾）</option><option>MR颅脑（影禾）</option><option>MR膝关节（影禾）</option></select>
+            <select class="bs-sel" id="bsModel"><option>全部模型</option><option>CT胸部AIR（影禾）</option><option>CT胸部肺结节辅助诊断（推想）</option><option>CT颅脑AIR（影禾）</option><option>CT颅脑脑出血辅助诊断（联影智能）</option><option>MR颅脑（影禾）</option><option>CT胸部肺炎辅助诊断（推想）</option><option>MR膝关节（影禾）</option><option>胃癌CT健康评估（达摩院）</option></select>
             <button class="bs-act" id="bsExp2">↑ 导出</button>
           </span>
         </div>
@@ -882,9 +886,9 @@ a,.dg-link{color:#1976D2 !important}
       </div>
 
       <div class="fbar" id="blFilters">
-        <div class="fitem"><label>机构名称</label><select id="blOrg"><option>全部机构</option><option>当前机构</option><option>浮梁县人民医院</option><option>江西省人民医院</option><option>金华广福医院</option><option>遂川县人民医院</option><option>九江市第一人民医院</option></select></div>
-        <div class="fitem"><label>厂商简称</label><select id="blVendor"><option>请选择</option><option>影禾</option></select></div>
-        <div class="fitem"><label>AI工具</label><select id="blTool"><option>请选择</option></select></div>
+        <div class="fitem"><label>机构名称</label><select id="blOrg"><option>全部机构</option><option>当前机构</option><option>浮梁县人民医院</option><option>江西省人民医院</option><option>金华广福医院</option><option>遂川县人民医院</option><option>九江市第一人民医院</option><option>上饶市人民医院</option><option>赣州市人民医院</option><option>南昌市第三医院</option></select></div>
+        <div class="fitem"><label>厂商简称</label><select id="blVendor"><option>请选择</option><option>影禾</option><option>推想</option><option>联影智能</option><option>达摩院</option><option>深睿医疗</option><option>科大讯飞</option></select></div>
+        <div class="fitem"><label>AI工具</label><select id="blTool"><option>请选择</option><option>CT胸部AIR（影禾）</option><option>CT胸部肺结节辅助诊断（推想）</option><option>CT颅脑脑出血辅助诊断（联影智能）</option><option>胃癌CT健康评估（达摩院）</option><option>MR颅脑（影禾）</option><option>CT胸部肺炎辅助诊断（推想）</option><option>CT胸部气胸辅助诊断（深睿医疗）</option><option>肺结节CT辅助诊断（讯飞）</option></select></div>
         <div class="fitem"><label>结算模式</label><select id="blMode"><option>请选择</option><option>阅片付费</option><option>发起付费</option></select></div>
         <div class="fitem"><label>计算次数</label><input id="blCalcN" class="bl-num" placeholder="请输入" inputmode="numeric"></div>
         <div class="fitem"><label>计算成功</label><input id="blOkN" class="bl-num" placeholder="请输入" inputmode="numeric"></div>
@@ -3687,15 +3691,20 @@ var BS_RES = [
 ];
 
 var BS_CHK = {
-  mod:  [{ n:'CT', v:23, c:'#A9473F' }, { n:'MR', v:9, c:'#2E7D74' }],
-  part: [{ n:'胸部', v:15, c:'#A9473F' }, { n:'颅脑', v:14, c:'#2E7D74' }, { n:'膝关节', v:3, c:'#C8862A' }]
+  mod:  [{ n:'CT', v:27, c:'#C0392B' }, { n:'MR', v:5, c:'#2E7D74' }],
+  part: [{ n:'胸部', v:16, c:'#C0392B' }, { n:'颅脑', v:12, c:'#2E7D74' },
+         { n:'膝关节', v:2, c:'#C8862A' }, { n:'腹部', v:2, c:'#1976D2' }]
 };
 
 var BS_DET = [
-  { tool:'CT胸部AIR（影禾）', mod:'CT', part:'胸部',   n:15 },
-  { tool:'CT颅脑AIR（影禾）', mod:'CT', part:'颅脑',   n:8  },
-  { tool:'MR颅脑（影禾）',    mod:'MR', part:'颅脑',   n:6  },
-  { tool:'MR膝关节（影禾）',  mod:'MR', part:'膝关节', n:3  }
+  { tool:'CT胸部AIR（影禾）',              mod:'CT', part:'胸部',   n:8 },
+  { tool:'CT胸部肺结节辅助诊断（推想）',   mod:'CT', part:'胸部',   n:6 },
+  { tool:'CT颅脑AIR（影禾）',              mod:'CT', part:'颅脑',   n:5 },
+  { tool:'CT颅脑脑出血辅助诊断（联影智能）', mod:'CT', part:'颅脑', n:4 },
+  { tool:'MR颅脑（影禾）',                 mod:'MR', part:'颅脑',   n:3 },
+  { tool:'CT胸部肺炎辅助诊断（推想）',     mod:'CT', part:'胸部',   n:2 },
+  { tool:'MR膝关节（影禾）',               mod:'MR', part:'膝关节', n:2 },
+  { tool:'胃癌CT健康评估（达摩院）',       mod:'CT', part:'腹部',   n:2 }
 ];
 
 var BS_INST = [
@@ -4262,11 +4271,14 @@ function bindUs(){
    运营管理 · 计费统计
    ============================================================================ */
 var BL = [
-  { org:'浮梁县人民医院',     vendor:'影禾', tool:'CT胸部AIR（影禾）', mode:'阅片付费', calc:1, ok:1, pay:1 },
-  { org:'江西省人民医院',     vendor:'影禾', tool:'CT颅脑AIR（影禾）', mode:'阅片付费', calc:3, ok:2, pay:1 },
-  { org:'金华广福医院',       vendor:'影禾', tool:'MR颅脑（影禾）',    mode:'发起付费', calc:6, ok:0, pay:6 },
-  { org:'遂川县人民医院',     vendor:'影禾', tool:'MR膝关节（影禾）',  mode:'发起付费', calc:9, ok:3, pay:9 },
-  { org:'九江市第一人民医院', vendor:'影禾', tool:'DR胸部（影禾）',    mode:'发起付费', calc:1, ok:1, pay:1 }
+  { org:'浮梁县人民医院',     vendor:'影禾',     tool:'CT胸部AIR（影禾）',               mode:'阅片付费', calc:4, ok:3, pay:1 },
+  { org:'江西省人民医院',     vendor:'推想',     tool:'CT胸部肺结节辅助诊断（推想）',    mode:'阅片付费', calc:3, ok:2, pay:1 },
+  { org:'金华广福医院',       vendor:'联影智能', tool:'CT颅脑脑出血辅助诊断（联影智能）', mode:'阅片付费', calc:2, ok:2, pay:1 },
+  { org:'遂川县人民医院',     vendor:'达摩院',   tool:'胃癌CT健康评估（达摩院）',         mode:'发起付费', calc:5, ok:0, pay:5 },
+  { org:'九江市第一人民医院', vendor:'影禾',     tool:'MR颅脑（影禾）',                  mode:'发起付费', calc:2, ok:0, pay:2 },
+  { org:'上饶市人民医院',     vendor:'推想',     tool:'CT胸部肺炎辅助诊断（推想）',       mode:'阅片付费', calc:2, ok:1, pay:1 },
+  { org:'赣州市人民医院',     vendor:'深睿医疗', tool:'CT胸部气胸辅助诊断（深睿医疗）',   mode:'发起付费', calc:3, ok:1, pay:3 },
+  { org:'南昌市第三医院',     vendor:'科大讯飞', tool:'肺结节CT辅助诊断（讯飞）',         mode:'阅片付费', calc:2, ok:1, pay:1 }
 ];
 
 var BL_F = { org:'全部机构', vendor:'', tool:'', mode:'', calc:'', ok:'', pay:'' };
