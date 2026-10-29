@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>江西健康云 · 省平台运营端 V1.1</title>
+<title>江西健康云 · 省平台运营端 V1.2</title>
 <!--
-  江西健康云 · 省平台运营端  V1.1（2026-10-29）
+  江西健康云 · 省平台运营端  V1.2（2026-10-29）
+  修复：打开默认页原为「应用管理（登记应用）」，改为「计算统计」
+  版本：V1.1（2026-10-29）
   变更：① 业务统计 · AI计算明细 改为全厂商工具（影禾/推想/联影智能/达摩院），合计仍 32；
              适用检查与模型筛选同步；② 计费统计 机构扩为 8 家、厂商覆盖 6 家、AI工具覆盖 8 个，
              厂商/AI工具筛选下拉补齐
@@ -687,7 +689,7 @@ a,.dg-link{color:#1976D2 !important}
     </div>
 
     <main class="main">
-      <div id="viewApps">
+      <div id="viewApps" class="hidden">
       <div class="head">
         <div>
           <h1>应用管理</h1>
@@ -4498,6 +4500,8 @@ function bindBl(){
   renderBl();
 }
 
+  /* 启动默认页：省平台运营端无「应用管理」，进入即计算统计 */
+  try { showView('stats'); } catch (e) { console.warn('boot', e); }
 </script>
 </body>
 </html>
